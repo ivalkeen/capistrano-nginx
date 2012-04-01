@@ -15,7 +15,7 @@ Capistrano::Configuration.instance.load do
     task "setup" do
       #config = ERB.new(File.read(File.join(File.dirname(__FILE__), "deploy/nginx.erb"))).result(binding)
       config = ERB.new(File.read(File.join(File.dirname(__FILE__), "capistrano-nginx/nginx_conf.erb"))).result(binding)
-      set :user, "ivan"
+      set :user, sudo_user
       put config, "/tmp/#{application}"
       run "#{sudo} mv /tmp/#{application} /etc/nginx/sites-available/#{application}"
       run "#{sudo} ln -fs /etc/nginx/sites-available/#{application} /etc/nginx/sites-enabled/#{application}"
