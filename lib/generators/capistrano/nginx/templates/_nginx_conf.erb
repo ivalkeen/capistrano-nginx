@@ -1,5 +1,5 @@
 upstream <%= application %> {
-  server <%= "unix:#{deploy_to}/current/tmp/sockets/unicorn.sock fail_timeout=0" %>;
+  server <%= "unix:#{shared_path}/sockets/unicorn.sock fail_timeout=0" %>;
 }
 
 server {
