@@ -13,7 +13,8 @@ Capistrano::Configuration.instance.load do
   namespace :nginx do
     desc "Setup application in nginx"
     task "setup" do
-      config = ERB.new(File.read(File.join(File.dirname(__FILE__), "deploy/nginx.erb"))).result(binding)
+      #config = ERB.new(File.read(File.join(File.dirname(__FILE__), "deploy/nginx.erb"))).result(binding)
+      config = ERB.new(File.read(File.join(File.dirname(__FILE__), "capistrano-nginx/nginx_conf.erb"))).result(binding)
       set :user, "ivan"
       put config, "/tmp/#{application}"
       run "#{sudo} mv /tmp/#{application} /etc/nginx/sites-available/#{application}"
