@@ -7,7 +7,7 @@ class TasksTest < Test::Unit::TestCase
     @config = Capistrano::Configuration.new
     Capistrano::Configuration.instance = @config
     task = @config.find_task("nginx:setup")
-    load 'capistrano-nginx/tasks.rb'
+    load 'capistrano/nginx/tasks.rb'
   end
 
   def test_add_setup_task

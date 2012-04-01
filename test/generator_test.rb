@@ -1,6 +1,6 @@
 require 'test_helper'
 require 'rails/generators/test_case'
-require 'generators/capistrano-nginx/config_generator'
+require 'generators/capistrano/nginx/config_generator'
 
 class GeneratorTest < Rails::Generators::TestCase
   tests Capistrano::Nginx::Generators::ConfigGenerator

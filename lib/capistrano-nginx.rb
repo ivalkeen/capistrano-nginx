@@ -1,6 +1,1 @@
-require "capistrano-nginx/version"
-
-module Capistrano
-  module Nginx
-  end
-end
+require "capistrano/nginx/version"
