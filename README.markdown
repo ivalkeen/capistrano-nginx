@@ -39,6 +39,10 @@ Launch new tasks:
     $ cap nginx:setup
     $ cap nginx:reload
 
+Or you can add hook to call this tasks after `deploy:setup`. Add to your `config/deploy.rb`:
+
+    after "deploy:setup", "nginx:setup", "nginx:reload"
+
 If you want to customize nginx configuration, just generate local nginx config before running `nginx:setup`:
 
     $ rails generate capistrano:nginx:config
