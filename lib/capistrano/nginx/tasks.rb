@@ -1,7 +1,7 @@
 Capistrano::Configuration.instance.load do
   namespace :nginx do
     desc "Setup application in nginx"
-    task "setup" do
+    task "setup", :role => :web do
       config_file = "config/deploy/nginx_conf.erb"
       unless File.exists?(config_file)
         config_file = File.join(File.dirname(__FILE__), "../../generators/capistrano/nginx/templates/_nginx_conf.erb")
@@ -14,7 +14,7 @@ Capistrano::Configuration.instance.load do
     end
 
     desc "Reload nginx configuration"
-    task :reload do
+    task :reload, :role => :web do
       set :user, sudo_user
       run "#{sudo} /etc/init.d/nginx reload"
     end

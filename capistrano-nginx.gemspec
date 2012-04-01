@@ -4,9 +4,9 @@ require File.expand_path('../lib/capistrano/nginx/version', __FILE__)
 Gem::Specification.new do |gem|
   gem.authors       = ["Ivan Tkalin"]
   gem.email         = ["itkalin@gmail.com"]
-  gem.description   = "Configuration and managements capistrano tasks for nginx"
+  gem.description   = "Simple nginx management with capistrano"
   gem.summary       = "Configuration and managements capistrano tasks for nginx"
-  gem.homepage      = "nonono"
+  gem.homepage      = "https://github.com/ivalkeen/capistrano-nginx"
 
   gem.files         = `git ls-files`.split($\)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }

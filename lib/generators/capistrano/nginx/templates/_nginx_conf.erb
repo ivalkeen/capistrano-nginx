@@ -4,7 +4,7 @@ upstream <%= application %> {
 
 server {
   client_max_body_size 4G;
-  server_name <%= site_name %>;
+  server_name <%= server_name %>;
   keepalive_timeout 5;
   root <%= "#{deploy_to}/current/public" %>;
   try_files $uri/index.html $uri.html $uri @<%= application %>;
