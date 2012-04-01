@@ -6,7 +6,7 @@ Capistrano::Configuration.instance.load do
       unless File.exists?(config_file)
         config_file = File.join(File.dirname(__FILE__), "nginx_conf.erb")
       end
-      config = ERB.new(config_file).result(binding)
+      config = ERB.new(File.read(config_file)).result(binding)
       set :user, sudo_user
       put config, "/tmp/#{application}"
       run "#{sudo} mv /tmp/#{application} /etc/nginx/sites-available/#{application}"
