@@ -2,7 +2,7 @@ Capistrano::Configuration.instance.load do
   namespace :nginx do
     desc "Setup application in nginx"
     task "setup" do
-      config_file = "config/nginx_conf.erb"
+      config_file = "config/deploy/nginx_conf.erb"
       unless File.exists?(config_file)
         config_file = File.join(File.dirname(__FILE__), "../../generators/capistrano/nginx/templates/_nginx_conf.erb")
       end
