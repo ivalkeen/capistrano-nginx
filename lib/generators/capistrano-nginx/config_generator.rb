@@ -6,7 +6,6 @@ module Capistrano
         source_root File.expand_path('../templates', __FILE__)
 
         def copy_template
-          engine = options[:template_engine]
           copy_file "_nginx_conf.erb", "config/deploy/nginx_conf.erb"
         end
       end
