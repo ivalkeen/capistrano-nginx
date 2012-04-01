@@ -3,7 +3,7 @@ Capistrano::Configuration.instance.load do
     desc "Setup application in nginx"
     task "setup" do
       config_file = "config/nginx_conf.erb"
-      unless config_file.exists?
+      unless File.exists?(config_file)
         config_file = File.join(File.dirname(__FILE__), "nginx_conf.erb")
       end
       config = ERB.new(config_file).result(binding)
