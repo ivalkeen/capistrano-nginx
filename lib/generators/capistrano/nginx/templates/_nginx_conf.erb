@@ -1,5 +1,5 @@
 upstream <%= application %> {
-  server <%= "unix:#{shared_path}/sockets/<%= webserver %>.sock fail_timeout=0" %>;
+  server <%= "unix:#{shared_path}/sockets/#{webserver}.sock fail_timeout=0" %>;
 }
 
 server {
