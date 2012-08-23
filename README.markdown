@@ -33,6 +33,7 @@ Make sure, following variables are defined in your `config/deploy.rb`:
 * `server_name` - your application's server_name in nginx (e.g. `example.com`)
 * `deploy_to` - deployment path
 * `sudo_user` - user name with sudo privileges (needed to config/restart nginx)
+* `webserver` - name of socket file you want to use
 
 Launch new tasks:
 
