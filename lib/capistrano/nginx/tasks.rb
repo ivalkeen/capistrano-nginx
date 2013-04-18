@@ -18,5 +18,11 @@ Capistrano::Configuration.instance.load do
       set :user, sudo_user
       run "#{sudo} /etc/init.d/nginx reload"
     end
+
+    desc "Start nginx"
+    task :start, :role => :web do
+      set :user, sudo_user
+      run "#{sudo} /etc/init.d/nginx start"
+    end
   end
 end
