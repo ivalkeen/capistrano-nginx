@@ -1,5 +1,6 @@
 def _cset(variable, *args, &block)
-  set(variable, *args, &block) if !exists?(variable)
+  config = Capistrano::Configuration.new
+  config.set(variable, *args, &block) if !config.exists?(variable)
 end
 
 _cset(:nginx_config_template) { 'config/deploy/nginx_conf.erb' }
