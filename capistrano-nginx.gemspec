@@ -1,17 +1,24 @@
-# -*- encoding: utf-8 -*-
-require File.expand_path('../lib/capistrano/nginx/version', __FILE__)
+# coding: utf-8
+lib = File.expand_path('../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
-Gem::Specification.new do |gem|
-  gem.authors       = ["Ivan Tkalin"]
-  gem.email         = ["itkalin@gmail.com"]
-  gem.description   = "Simple nginx management with capistrano"
-  gem.summary       = "Configuration and managements capistrano tasks for nginx"
-  gem.homepage      = "https://github.com/ivalkeen/capistrano-nginx"
+Gem::Specification.new do |spec|
+  spec.name          = 'capistrano-nginx'
+  spec.version       = '0.2.0'
+  spec.authors       = ['Koen Punt']
+  spec.email         = ['me@koen.pt']
+  spec.description   = %q{Simple nginx management for Capistrano 3.x}
+  spec.summary       = %q{Simple nginx management for Capistrano 3.x}
+  spec.homepage      = 'https://github.com/koenpunt/capistrano-nginx'
+  spec.license       = 'MIT'
 
-  gem.files         = `git ls-files`.split($\)
-  gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
-  gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
-  gem.name          = "capistrano-nginx"
-  gem.require_paths = ["lib"]
-  gem.version       = Capistrano::Nginx::VERSION
+  spec.files         = `git ls-files`.split($/)
+  spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
+  spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
+  spec.require_paths = ['lib']
+
+  spec.add_dependency 'capistrano', '~> 3.0.0'
+
+  spec.add_development_dependency 'bundler', '~> 1.3'
+  spec.add_development_dependency 'rake'
 end

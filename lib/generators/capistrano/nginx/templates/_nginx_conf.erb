@@ -1,28 +1,27 @@
-upstream <%= application %> {
-  server unix:/tmp/<%= application %>.sock fail_timeout=0;
+upstream <%= fetch(:nginx_upstream) %> {
+  server unix:/tmp/<%= fetch(:nginx_upstream) %>.sock fail_timeout=0;
 }
 
 server {
-  <% if app_port %>
-  listen <%= app_port %> default deferred;
+  <% if fetch(:nginx_listen, false) %>
+  listen <%= fetch(:nginx_listen) %>;
   <% end %>
-  client_max_body_size 4G;
-  server_name <%= server_name %>;
-  keepalive_timeout 5;
-  root <%= "#{deploy_to}/current/public" %>;
-  try_files $uri/index.html $uri.html $uri @<%= application %>;
-  
+  server_name <%= fetch(:nginx_server_name) %>;
+  root <%= current_path.join('public') %>;
+
+  try_files $uri/index.html $uri.html $uri @<%= fetch(:nginx_upstream) %>;
+
   location ^~ /assets/ {
     gzip_static on;
     expires max;
     add_header Cache-Control public;
   }
-  
-  location @<%= application %> {
+
+  location @<%= fetch(:nginx_upstream) %> {
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     proxy_set_header Host $http_host;
     proxy_redirect off;
-    proxy_pass http://<%= application %>;
+    proxy_pass http://<%= fetch(:nginx_upstream) %>;
   }
 
   if (-f $document_root/system/maintenance.html) {
@@ -31,11 +30,11 @@ server {
 
   error_page 500 502 504 /500.html;
   location = /500.html {
-    root <%= "#{deploy_to}/current/public" %>;
+    root <%= current_path.join('public') %>;
   }
 
   error_page 503 @maintenance;
   location @maintenance {
-    rewrite  ^(.*)$  /system/maintenance.html break;
+    rewrite ^(.*)$ /system/maintenance.html break;
   }
 }

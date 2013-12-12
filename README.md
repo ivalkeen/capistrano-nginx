@@ -1,17 +1,15 @@
-# capistrano-nginx
+# Capistrano::nginx
 
-This gem provides two capistrano tasks:
-
-* `nginx:setup` -- creates /etc/nginx/sites-available/YOUR\_APP and links it to /etc/nginx/sites-enabled/YOUR\_APP
-* `nginx:reload` -- invokes `/etc/init.d/nginx reload` on server
-
-And nginx configuration file generator, that will create local copy of default nginx config for customization.
+Nginx support for Capistrano 3.x
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
-    gem 'capistrano-nginx'
+```ruby
+gem 'capistrano', '~> 3.0.0'
+gem 'capistrano-nginx', github: 'koenpunt/capistrano-nginx'
+```
 
 And then execute:
 
@@ -23,32 +21,46 @@ Or install it yourself as:
 
 ## Usage
 
-Add this to your `config/deploy.rb` file:
+Require in `Capfile`:
 
-    require 'capistrano/nginx/tasks'
-
-Make sure, following variables are defined in your `config/deploy.rb`:
-
-* `application` - application name
-* `server_name` - your application's server_name in nginx (e.g. `example.com`)
-* `deploy_to` - deployment path
-* `sudo_user` - user name with sudo privileges (needed to config/restart nginx)
-* `app_port` - application port (optional)
+```ruby
+require 'capistrano/nginx'
+```
 
 Launch new tasks:
 
-    $ cap nginx:setup
-    $ cap nginx:reload
+    $ cap production nginx:setup
+    $ cap production nginx:reload
 
-Or you can add hook to call this tasks after `deploy:setup`. Add to your `config/deploy.rb`:
-
-    after "deploy:setup", "nginx:setup", "nginx:reload"
-
-If you want to customize nginx configuration, just generate local nginx config before running `nginx:setup`:
+If you want to customize the nginx configuration, you can use the Rails generator to create a local copy of the config template:
 
     $ rails generate capistrano:nginx:config
 
-And then edit file `config/deploy/nginx_conf.erb` as you like.
+And then edit `config/deploy/nginx_conf.erb` as you like.
+
+Configurable options, shown here with defaults:
+
+```ruby
+set :nginx_path, '/etc/nginx' # directory containing sites-available and sites-enabled
+set :nginx_template, 'config/deploy/nginx_conf.erb' # configuration template
+set :nginx_server_name, 'example.com' # optional, defaults to :application
+set :nginx_upstream, 'example-app' # optional, defaults to :application
+set :nginx_listen, 80 # optional, default is not set
+set :nginx_roles, :all
+```
+
+### Tasks
+
+This gem provides the following Capistrano tasks:
+
+* `nginx:setup` creates `/etc/nginx/sites-available/APPLICATION.conf` and links it to `/etc/nginx/sites-enabled/APPLICATION.conf`
+* `nginx:stop` invokes `service nginx stop` on server
+* `nginx:start` invokes `service nginx start` on server
+* `nginx:restart` invokes `service nginx restart` on server
+* `nginx:reload` invokes `service nginx reload` on server
+* `nginx:force-reload` invokes `service nginx force-reload` on server
+* `nginx:enable_site` creates symlink in sites-enabled directory
+* `nginx:disable_site` removes symlink from sites-enabled directory
 
 ## Contributing
 
