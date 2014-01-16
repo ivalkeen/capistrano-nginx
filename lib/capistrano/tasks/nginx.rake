@@ -1,5 +1,4 @@
 namespace :nginx do
-  desc "Setup nginx configuration"
   desc <<-DESC
         Setup nginx configuration
 
