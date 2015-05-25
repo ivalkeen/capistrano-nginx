@@ -1,3 +1,5 @@
+# THIS PROJECT IS NOT MAINTAINED ANYMORE
+
 # capistrano-nginx
 
 This gem provides two capistrano tasks:
