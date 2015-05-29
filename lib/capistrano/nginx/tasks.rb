@@ -1,8 +1,15 @@
+def _cset(variable, *args, &block)
+  config = Capistrano::Configuration.new
+  config.set(variable, *args, &block) if !config.exists?(variable)
+end
+
+_cset(:nginx_config_template) { 'config/deploy/nginx_conf.erb' }
+
 Capistrano::Configuration.instance.load do
   namespace :nginx do
     desc "Setup application in nginx"
     task "setup", :role => :web do
-      config_file = "config/deploy/nginx_conf.erb"
+      config_file = :nginx_config_template
       unless File.exists?(config_file)
         config_file = File.join(File.dirname(__FILE__), "../../generators/capistrano/nginx/templates/_nginx_conf.erb")
       end
