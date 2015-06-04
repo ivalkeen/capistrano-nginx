@@ -14,4 +14,6 @@ Gem::Specification.new do |gem|
   gem.name          = "capistrano-nginx"
   gem.require_paths = ["lib"]
   gem.version       = Capistrano::Nginx::VERSION
+
+  gem.add_dependency 'capistrano', '~> 2.0'
 end
