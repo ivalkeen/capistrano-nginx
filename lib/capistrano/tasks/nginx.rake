@@ -24,7 +24,10 @@ namespace :nginx do
         config_file = File.join(File.dirname(__FILE__), "../../generators/capistrano/nginx/templates/_nginx_conf.erb")
       end
       config = ERB.new(File.new(config_file).read, 0, '-').result(binding)
-      upload! StringIO.new(config), "#{fetch(:nginx_path)}/sites-available/#{fetch(:application)}.conf"
+      upload! StringIO.new(config), "/tmp/#{fetch(:application)}.conf"
+      sudo :cp,
+        "/tmp/#{fetch(:application)}.conf",
+        "#{fetch(:nginx_path)}/#{fetch(:nginx_sites_available_subfolder)}/#{fetch(:application)}.conf"
     end
   end
 
