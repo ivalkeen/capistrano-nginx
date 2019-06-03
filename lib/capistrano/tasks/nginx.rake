@@ -9,6 +9,8 @@ namespace :nginx do
           set :nginx_upstream, -> { fetch(:application) }
           set :nginx_server_name, -> { fetch(:application) }
           set :nginx_template, "config/deploy/nginx_conf.erb"
+          set :nginx_sites_available_subfolder, "sites-available"
+          set :nginx_sites_enabled_subfolder, "sites-enabled"
     DESC
   task :setup do
     invoke :'nginx:create_config'
@@ -38,9 +40,9 @@ namespace :nginx do
   desc 'Enable nginx site'
   task :enable_site do
     on roles fetch(:nginx_roles) do
-      execute :ln, "-sf",
-        "#{fetch(:nginx_path)}/sites-available/#{fetch(:application)}.conf",
-        "#{fetch(:nginx_path)}/sites-enabled/#{fetch(:application)}.conf"
+      sudo :ln, "-sf",
+        "#{fetch(:nginx_path)}/#{fetch(:nginx_sites_available_subfolder)}/#{fetch(:application)}.conf",
+        "#{fetch(:nginx_path)}/#{fetch(:nginx_sites_enabled_subfolder)}/#{fetch(:application)}.conf"
     end
     invoke :'nginx:reload'
   end
@@ -48,8 +50,8 @@ namespace :nginx do
   desc 'Disable nginx site'
   task :disable_site do
     on roles fetch(:nginx_roles) do
-      config_link = "#{fetch(:nginx_path)}/sites-enabled/#{fetch(:application)}.conf"
-      execute :unlink, config_link if test "[ -f #{config_link} ]"
+      config_link = "#{fetch(:nginx_path)}/#{fetch(:nginx_sites_enabled_subfolder)}/#{fetch(:application)}.conf"
+      sudo :unlink, config_link if test "[ -f #{config_link} ]"
     end
     invoke :'nginx:reload'
   end
@@ -61,6 +63,8 @@ namespace :load do
     set :nginx_path, "/etc/nginx"
     set :nginx_upstream, -> { fetch(:application) }
     set :nginx_server_name, -> { fetch(:application) }
+    set :nginx_sites_available_subfolder, "sites-available"
+    set :nginx_sites_enabled_subfolder, "sites-enabled"
     set :nginx_template, "config/deploy/nginx_conf.erb"
   end
 end

@@ -45,6 +45,8 @@ set :nginx_path, '/etc/nginx' # directory containing sites-available and sites-e
 set :nginx_template, 'config/deploy/nginx_conf.erb' # configuration template
 set :nginx_server_name, 'example.com' # optional, defaults to :application
 set :nginx_upstream, 'example-app' # optional, defaults to :application
+set :nginx_sites_available_subfolder, "sites-available.d" # optional, defaults to "sites-available"
+set :nginx_sites_enabled_subfolder, "sites-enabled.d" # optional, defaults to "sites-enabled"
 set :nginx_listen, 80 # optional, default is not set
 set :nginx_roles, :all
 ```
